@@ -38,14 +38,27 @@ try {
     die();
 }
 ~~~
+* Commit : "Connection avec la BDD TiDB Cloud avec PHP PDO".
 
 
 
-### Étape 4 : Récupération des pokemon 
+### Étape 4 : Récupération des pokemons 
 * Dans TiDB tester la requête    `SELECT` pour récupérer le nom et l'image des Pokémon
 * Dans `index.php`, effectuer une requête `SELECT` pour récupérer le nom et l'image des Pokémon.
-*   Boucler sur les résultats pour afficher une liste simple.
-* Commit : "Feat: affichage de la liste des pokemons".
+* Boucler sur les résultats pour afficher une liste simple.
+~~~php
+// Prépare le requête
+$select = $connection->query("SELECT * FROM pokemon;");
+
+// Envoie la requête SQL à la BDD, recupérer (fetch) les résultats dans un tableau d'objet
+$pokemons = $select->fetchAll(PDO::FETCH_OBJ);
+
+foreach ($pokemons as $pokemon)
+{
+    echo ("<h1> {$pokemon->pokemon_id}, {$pokemon->pokemon_nom} </h1>");
+}
+~~~
+* Commit : "Récupération des pokemons".
 
 ### Étape 5 : Page de Détails
 *    Créer `detail.php`.
