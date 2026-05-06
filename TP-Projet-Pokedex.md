@@ -13,6 +13,7 @@
 * Importer les tables et les données dans le cluster via les fichiés CSV fournis.
 
 ### Étape 3 : Connection avec la BDD TiDB Cloud avec PHP PDO
+* Copier coller le fichier markdown TP-Projet a la racine du projet wamp
 *    Utiliser PDO pour établir la connexion.
 * Commiter et pusher.
 ~~~php
@@ -38,7 +39,72 @@ try {
     die();
 }
 ~~~
+* Ouvrir un terminal git bash dans l'IDE VS code
 * Commit : "Connection avec la BDD TiDB Cloud avec PHP PDO".
+
+### Etape 3-2 : Sécurisation des identifiants via un fichier .env
+* Créer le fichier `.env`
+~~~
+DB_HOST=gateway01.eu-central-1.prod.aws.tidbcloud.com
+DB_PORT=4000
+DB_NAME=bruno_pokedex
+DB_USER=ML59cW9tVcUNqvD.root
+DB_PASSWORD=S5OnMjy2ItYIPMZY
+~~~
+* Installer une librairie pour lire le .env en PHP
+~~~
+composer require vlucas/phpdotenv
+~~~
+* Remplacer les données sensibles hardcodées dans `index.php` par les variables d'environnement
+~~~php
+<?php
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Charge les variables du fichier .env
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+try {
+    $dns = "mysql:host={$_ENV['DB_HOST']};port={$_ENV['DB_PORT']};dbname={$_ENV['DB_NAME']};";
+    
+    $options = [
+        PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+        PDO::MYSQL_ATTR_SSL_CA => true,
+    ];
+
+    $connection = new PDO($dns, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $options);
+
+} catch (Exception $e) {
+    echo "Connexion à la BDD impossible : ", $e->getMessage();
+    die();
+}
+?>
+~~~
+* Créer le fichier .gitignore et ignorer le fichier .env et le dossier vendor/
+~~~
+.env
+vendor/
+~~~
+* Créer un fichier .env.example. Il servira de modèle pour les autres développeurs.
+~~~
+DB_HOST=
+DB_PORT=
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+~~~
+* Mettre à jour le README.md pour expliquer comment installer le projet
+~~~
+# prenom-pokedex
+
+## Installation
+* Installer les dépendances
+/~~~
+composer install
+/~~~
+~~~
+* Commit : "Sécurisation des identifiants via un fichier .env"
+* push
 
 
 
@@ -60,9 +126,11 @@ foreach ($pokemons as $pokemon)
 ~~~
 * Commit : "Récupération des pokemons".
 
+
+
 ### Étape 5 : Page de Détails
 *    Créer `detail.php`.
-*    Sur `index.php`, créer des liens de type `detail?id=1`.
+*    Sur `index.php`, créer des liens de type `detail?pokemon_id=1`.
 *    Dans `detail.php`, récupérer l'ID via `$_GET`.
 * **Sécurité :** Utiliser impérativement une **requête préparée** (`prepare` / `execute`) pour éviter les injections SQL.
 * **Challenge :** Faire une jointure (`JOIN`) pour afficher les types et les statistiques du Pokémon sélectionné.
