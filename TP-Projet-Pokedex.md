@@ -105,7 +105,8 @@ composer install
 ~~~
 * Commit : "Sécurisation des identifiants via un fichier .env"
 * push
-
+* regarder dans le github que les fichiers ignorés n'aparaissent pas
+* montrer le contenu de composer.json qui indique quels dépendences installer au moment du composer install
 
 
 ### Étape 4 : Récupération des pokemons 
