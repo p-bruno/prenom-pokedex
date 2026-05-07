@@ -1,7 +1,11 @@
 <?php
+require_once __DIR__ . '/vendor/autoload.php';
+//Charge les variables du fichier .env
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 try {
     // DNS (Data Name Source), c'est le point d'entrée pour accéder à la BDD
-    $dns = "mysql:host=gateway01.eu-central-1.prod.aws.tidbcloud.com;port=4000;dbname=prenom_pokedex;";
+    $dns = "mysql:host={$_ENV['DB_HOST']};port={$_ENV['DB_PORT']};dbname={$_ENV['DB_NAME']};";
     // mysql => indique le moteur de la BDD
     // host=localhost => l'adresse du serveur
     // dbname=studio_exemple => nom de la base de données
@@ -10,8 +14,8 @@ try {
     PDO::MYSQL_ATTR_SSL_CA => true,
     ];
     // Utilisateur avec lequel se connecter a la BDD
-    $utilisateur = '2RMA3YcVCzmLAdG.root';
-    $motDePasse = 'IHwcV6Py8WMRCGJI';
+    $utilisateur = $_ENV['DB_USER'];
+    $motDePasse = $_ENV['DB_PASSWORD'];
 
     // Crée l'objet PDO pour se connecter
     $connection = new PDO( $dns, $utilisateur, $motDePasse, $options);
