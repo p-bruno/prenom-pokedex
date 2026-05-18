@@ -133,7 +133,24 @@ foreach ($pokemons as $pokemon)
 ### Étape 5 : Page de Détails
 *    Créer `detail.php`.
 *    Sur `index.php`, créer des liens de type `detail?pokemon_id=1`.
+~~~php
+foreach ($pokemons as $pokemon)
+{
+    echo ("<a href='detail.php?pokemon_id={$pokemon->pokemon_id}'>");
+    echo ("<img src='{$pokemon->pokemon_img}'>");
+    echo ("<h1> {$pokemon->pokemon_id}, {$pokemon->pokemon_nom} </h1>");
+    echo ("</a>");
+}
+~~~
 *    Dans `detail.php`, récupérer l'ID via `$_GET`.
+~~~php
+<?php
+echo ("Page detail.php <br>");
+$id = $_GET['pokemon_id'];
+echo ("{$id}");
+~~~
+* Commit : "Création page détail".
+
 * **Sécurité :** Utiliser impérativement une **requête préparée** (`prepare` / `execute`) pour éviter les injections SQL.
 * **Challenge :** Faire une jointure (`JOIN`) pour afficher les types et les statistiques du Pokémon sélectionné.
 
