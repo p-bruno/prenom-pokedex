@@ -198,8 +198,22 @@ print_r($pokemon);
 echo "</pre>";
 ~~~
 
-commit : "requete préparée"
+* commit : "requete préparée"
+* Affiche les données du pokemon sur la page
+~~~php
+// Envoie la requête SQL à la BDD, recupérer (fetch) les résultats dans un tableau d'objet
+$pokemon = $stmt->fetchAll(PDO::FETCH_OBJ);
+$pokemon = $pokemon[0];
 
+echo "
+<h2>{$pokemon->pokemon_nom}</h2>
+<img src='{$pokemon->pokemon_img}' alt='{$pokemon->pokemon_nom}' width='200'>
+<p>Poids : {$pokemon->pokemon_poids} kg</p>
+<p>Taille : {$pokemon->pokemon_taille} m</p>
+<p>Description : {$pokemon->pokemon_description}</p>
+";
+~~~
+* commit : "Affichage des données dans detail.php"
 ### Étape 6 : UX/UI (Libre)
 *    Améliorer le style de votre site en utilisant l'outil de votre choix (ChatGPT, CSS pur, bootstrap etc...). Exemple : https://brunopokedex.vercel.app/
 

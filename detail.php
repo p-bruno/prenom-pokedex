@@ -32,7 +32,12 @@ $stmt->execute();
 
 // Envoie la requête SQL à la BDD, recupérer (fetch) les résultats dans un tableau d'objet
 $pokemon = $stmt->fetchAll(PDO::FETCH_OBJ);
+$pokemon = $pokemon[0];
 
-echo "<pre>";
-print_r($pokemon);
-echo "</pre>";
+echo "
+<h2>{$pokemon->pokemon_nom}</h2>
+<img src='{$pokemon->pokemon_img}' alt='{$pokemon->pokemon_nom}' width='200'>
+<p>Poids : {$pokemon->pokemon_poids} kg</p>
+<p>Taille : {$pokemon->pokemon_taille} m</p>
+<p>Description : {$pokemon->pokemon_description}</p>
+";
