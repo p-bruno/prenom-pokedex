@@ -112,7 +112,7 @@ composer install
 ### Étape 4 : Récupération des pokemons 
 * Dans TiDB tester la requête    `SELECT` pour récupérer le nom et l'image des Pokémon
 * Dans `index.php`, effectuer une requête `SELECT` pour récupérer le nom et l'image des Pokémon.
-* Boucler sur les résultats pour afficher une liste simple.
+* Boucler sur les résultats pour afficher une liste avec image.
 ~~~php
 // Prépare le requête
 $select = $connection->query("SELECT * FROM pokemon;");
@@ -122,6 +122,7 @@ $pokemons = $select->fetchAll(PDO::FETCH_OBJ);
 
 foreach ($pokemons as $pokemon)
 {
+    echo ("<img src='{$pokemon->pokemon_img}'>");
     echo ("<h1> {$pokemon->pokemon_id}, {$pokemon->pokemon_nom} </h1>");
 }
 ~~~
