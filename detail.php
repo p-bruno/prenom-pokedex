@@ -1,1 +1,4 @@
-Page detail.php
+<?php
+$id = $_GET['pokemon_id'];
+
+echo ($id);
