@@ -32,6 +32,7 @@ $pokemons = $select->fetchAll(PDO::FETCH_OBJ);
 
 foreach ($pokemons as $pokemon)
 {
+    echo ("<img src='{$pokemon->pokemon_img}' alt='Image du Pokemon'>");
     echo ("<h1> {$pokemon->pokemon_id}, {$pokemon->pokemon_nom} </h1>");
 }
 ?>
