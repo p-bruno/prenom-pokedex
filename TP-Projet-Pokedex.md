@@ -11,6 +11,7 @@
 * Créer le MCD de la BDD. Une fois fait, importer le schéma dans le readme de GitHub.   
 * Créer un cluster sur **TiDB Cloud** intitulé "Pokedex".
 * Importer les tables et les données dans le cluster via les fichiés CSV fournis.
+* Teste si l'import a bien fonctionnée avec des requêtes SQL basiques
 
 ### Étape 3 : Connection avec la BDD TiDB Cloud avec PHP PDO
 * Copier coller le fichier markdown TP-Projet a la racine du projet wamp
@@ -24,20 +25,20 @@ try {
     // mysql => indique le moteur de la BDD
     // host=localhost => l'adresse du serveur
     // dbname=studio_exemple => nom de la base de données
-    $options = [
-    PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
-    PDO::MYSQL_ATTR_SSL_CA => true,
-    ];
     // Utilisateur avec lequel se connecter a la BDD
     $utilisateur = 'ML59cW9tVcUNqvD.root';
     $motDePasse = 'S5OnMjy2ItYIPMZY';
+    $options = [
+        PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+        PDO::MYSQL_ATTR_SSL_CA => true,
+    ];
 
     // Crée l'objet PDO pour se connecter
     $connection = new PDO( $dns, $utilisateur, $motDePasse, $options);
 } catch ( Exception $e ) {
     echo "Connection à la BDD impossible : ", $e->getMessage();
     die();
-}
+}>
 ~~~
 * Ouvrir un terminal git bash dans l'IDE VS code
 * Commit : "Connection avec la BDD TiDB Cloud avec PHP PDO".
@@ -70,6 +71,7 @@ try {
     $options = [
         PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
         PDO::MYSQL_ATTR_SSL_CA => true,
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     ];
 
     $connection = new PDO($dns, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $options);
